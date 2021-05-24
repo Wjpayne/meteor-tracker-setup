@@ -11,33 +11,33 @@ app.use(cors());
 app.use(express.json());
 
 //setup mongo_db connections for local and production builds
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
 const port = process.env.PORT || 5000;
 
-//TODO setup mongodb cluster and add MONGO_URL .env
+//TODO setup mongodb cluster and add MONGO_URL .env if I am going to make a login!
 
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-});
+// mongoose.connect(process.env.MONGO_URL, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+//   useCreateIndex: true,
+// });
 
-if (process.env.NODE_ENV !== "production") {
-  const mongoDB = mongoose.connection;
+// if (process.env.NODE_ENV !== "production") {
+//   const mongoDB = mongoose.connection;
 
-  mongoDB.on("open", () => {
-    console.log("MongoDB is connected");
-  });
-  mongoDB.on("error", (error) => {
-    console.log(error);
-  });
-}
+//   mongoDB.on("open", () => {
+//     console.log("MongoDB is connected");
+//   });
+//   mongoDB.on("error", (error) => {
+//     console.log(error);
+//   });
+// }
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-  }
+// if (process.env.NODE_ENV === "production") {
+//     app.use(express.static("client/build"));
+//   }
 
 // TODO 
 
@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === "production") {
 //get static html and load it
 
 app.get("/*", (request, response) => {
-  response.sendFile(path.join(__dirname, "client/build, ", "index.html"));
+  return response.status(200).json({ message: 'Welcome to Express API template' });
 });
 
 //error handling
